@@ -12,5 +12,6 @@ $(OUTPUT_DIR)/main.o:
 
 
 clean:
+	@ echo "cleanning..."
 	@ rm -fr $(OUTPUT_DIR)
 	@ mkdir $(OUTPUT_DIR)
