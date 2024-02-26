@@ -1,11 +1,11 @@
 #include "forces.hpp"
 
 
-void Force::apply_force(float delta_t) {};
+void Force::apply_force() {};
 
 
-void GravityForce::apply_force(float delta_t) {
+void GravityForce::apply_force() {
     for (Particle * p : * particles) {
-        p->acceleration += gravity * delta_t;
+        p->acceleration += gravity;
     }
 };
