@@ -51,7 +51,7 @@ void FloorConstraint::apply_constraint() {
     for (Particle * p : * particles) {
         if (p->position.y + p->radius > y_pos) {
             p->position.y = y_pos - p->radius;
-            // 'static collisions' (easier because parallel to y)
+            // 'static collisions' (easier and manually implemented because parallel to y)
             p->velocity.y = 0.;
             p->acceleration.y = 0.;
         }

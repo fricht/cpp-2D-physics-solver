@@ -18,6 +18,7 @@ class Particle {
     void simulate(float);
 
     void draw(sf::RenderWindow &, Camera &);
+    void draw_vectors(sf::RenderWindow &, Camera &);
 
     // the vector is parallel to the floor
     void static_collision(sf::Vector2f &);

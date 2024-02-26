@@ -35,6 +35,7 @@ void Scene::update(float delta_t, uint iterations) {
 void Scene::draw(sf::RenderWindow & window, Camera & camera) {
     for (Particle * p : particles) {
         p->draw(window, camera);
+        p->draw_vectors(window, camera);
     }
     for (Constraint * c : constraints) {
         c->draw(window, camera);

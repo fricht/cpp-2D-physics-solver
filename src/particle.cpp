@@ -17,6 +17,23 @@ void Particle::draw(sf::RenderWindow & window, Camera & camera) {
 };
 
 
+void Particle::draw_vectors(sf::RenderWindow & window, Camera & camera) {
+    // draw velocity
+    sf::Vertex line[2];
+    line[0].position = (position - camera.position) * camera.zoom;
+    line[0].color = sf::Color::White;
+    line[1].position = (position + velocity - camera.position) * camera.zoom;
+    line[1].color = sf::Color::Blue;
+    window.draw(line, 2, sf::Lines);
+    // draw acceleration
+    line[0].position = (position - camera.position) * camera.zoom;
+    line[0].color = sf::Color::White;
+    line[1].position = (position + acceleration - camera.position) * camera.zoom;
+    line[1].color = sf::Color::Red;
+    window.draw(line, 2, sf::Lines);
+};
+
+
 void Particle::static_collision(sf::Vector2f & floor) {
     // normalizing
     float length = std::sqrt(floor.x * floor.x + floor.y * floor.y);
