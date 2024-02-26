@@ -5,15 +5,52 @@
 #include "constraints.hpp"
 
 
-struct{
+struct {
     sf::Vector2f position = sf::Vector2f(0., 0.);
     float zoom = 1.;
 } camera;
 
 
+class Scene {
+    public:
+        std::vector<Particle*> particles;
+        std::vector<Constraint*> constraints;
+
+    void update(float, uint);
+
+    void draw(sf::RenderWindow & window);
+};
+
+void Scene::update(float delta_t, uint iterations) {
+    for (Particle * p : particles) {
+        p->simulate(delta_t);
+    }
+    for (uint i = 0; i < iterations; i++) {
+        for (Constraint * c : constraints) {
+            c->apply_constraint();
+        }
+    }
+}
+
+void Scene::draw(sf::RenderWindow & window) {
+    for (Particle * p : particles) {
+        sf::CircleShape p_shape(p->radius);
+        p_shape.setFillColor(p->color);
+        p_shape.setPosition(p->position);
+        // apply cam
+        p_shape.setScale(camera.zoom, camera.zoom);
+        p_shape.setOrigin(camera.position);
+        window.draw(p_shape);
+    }
+}
+
+
 // pointers are so simple yet so complex...
 // wtf is this ? ------------v  a reference to the object ? (yes) but why this notation ?
-void update(sf::RenderWindow & window);
+void update(sf::RenderWindow &, Scene &, float);
+
+
+void generate_scene(Scene &);
 
 
 int main() {
@@ -23,6 +60,13 @@ int main() {
     // for cam move
     sf::Vector2i last_mouse_pos(0, 0);
     bool mouse_was_released(true);
+
+    // scene
+    Scene scene{};
+    generate_scene(scene);
+
+    // delta time
+    sf::Clock delta_clock;
 
     // main loop
     while (window.isOpen()) {
@@ -63,19 +107,25 @@ int main() {
 
     // update window
     window.clear();
-    update(window);
+    update(window, scene, delta_clock.restart().asSeconds());
     window.display();
     }
-}
+};
 
 
-void update(sf::RenderWindow & window) {
-    sf::RectangleShape rect(sf::Vector2f(100., 60.));
-    rect.setFillColor(sf::Color(204, 64, 134, 200));
-    rect.setPosition(10, 100);
-    // apply camera
-    rect.setScale(camera.zoom, camera.zoom);
-    rect.setOrigin(sf::Vector2f(camera.position));
-    // draw
-    window.draw(rect);
-}
+void update(sf::RenderWindow & window, Scene & scene, float delta_t) {
+    // physics update
+    scene.update(delta_t, 4);
+    // render
+    scene.draw(window);
+};
+
+
+void generate_scene(Scene & scene) {
+    Particle * p = new Particle;
+    p->color = sf::Color(255, 255, 255, 255);
+    p->radius = 10;
+    p->position = sf::Vector2f(100, 100);
+    p->acceleration = sf::Vector2f(15, 8);
+    scene.particles.push_back(p);
+};

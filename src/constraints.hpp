@@ -7,7 +7,15 @@
 #include "particle.hpp"
 
 
-class PositionConstraint {
+class Constraint {
+    public:
+
+    // intended to be overidden by chindrens
+    void apply_constraint();
+};
+
+
+class PositionConstraint : public Constraint {
     public:
         sf::Vector2f position;
         Particle * particle;
@@ -16,7 +24,7 @@ class PositionConstraint {
 };
 
 
-class PointDistanceConstraint {
+class PointDistanceConstraint : public Constraint {
     public:
         sf::Vector2f point;
         float distance;
