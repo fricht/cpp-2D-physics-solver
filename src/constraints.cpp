@@ -53,7 +53,6 @@ void FloorConstraint::apply_constraint() {
             p->position.y = y_pos - p->radius;
             // 'static collisions' (easier and manually implemented because parallel to y)
             p->velocity.y = 0.;
-            p->acceleration.y = 0.;
         }
     }
 };

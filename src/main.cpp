@@ -20,7 +20,7 @@ class Scene {
 
 void Scene::update(float delta_t, uint iterations) {
     for (Force * f : forces) {
-        f->apply_force(delta_t);
+        f->apply_force();
     }
     for (Particle * p : particles) {
         p->simulate(delta_t);
@@ -127,7 +127,6 @@ void generate_scene(Scene & scene) {
     p->color = sf::Color(255, 255, 255);
     p->radius = 10;
     p->position = sf::Vector2f(100, 100);
-    p->acceleration = sf::Vector2f(15, 8);
     scene.particles.push_back(p);
     // fix it
     // PositionConstraint * fixed = new PositionConstraint;
@@ -154,6 +153,6 @@ void generate_scene(Scene & scene) {
     // gravity
     GravityForce * gravity = new GravityForce;
     gravity->particles = & scene.particles;
-    gravity->gravity = sf::Vector2f(0, 9.9);
+    gravity->gravity = sf::Vector2f(0, 90.9);
     scene.forces.push_back(gravity);
 };

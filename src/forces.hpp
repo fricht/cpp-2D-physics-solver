@@ -8,7 +8,7 @@
 class Force {
     public:
 
-    virtual void apply_force(float);
+    virtual void apply_force();
 };
 
 
@@ -17,7 +17,7 @@ class GravityForce : public Force {
         sf::Vector2f gravity;
         std::vector<Particle *> * particles;
 
-    void apply_force(float);
+    void apply_force();
 };
 
 

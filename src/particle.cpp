@@ -4,6 +4,7 @@
 void Particle::simulate(float delta_t) {
     velocity += acceleration * delta_t;
     position += velocity * delta_t;
+    acceleration = sf::Vector2f(0, 0);
 };
 
 
@@ -46,7 +47,4 @@ void Particle::static_collision(sf::Vector2f & floor) {
     // apply for velocity
     dot = velocity.x * floor.x + velocity.y * floor.y;
     velocity = floor * dot;
-    // apply for acceleration
-    dot = acceleration.x * floor.x + acceleration.y * floor.y;
-    acceleration = floor * dot;
 };
