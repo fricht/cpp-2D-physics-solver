@@ -1,6 +1,9 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+#include "particle.hpp"
+#include "constraints.hpp"
+
 
 struct{
     sf::Vector2f position = sf::Vector2f(0., 0.);
