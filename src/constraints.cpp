@@ -9,7 +9,6 @@ void Constraint::draw(sf::RenderWindow &, Camera &) {};
 void PositionConstraint::apply_constraint() {
     particle->position = position;
     particle->velocity = sf::Vector2f();
-    particle->acceleration = sf::Vector2f();
 };
 
 void PositionConstraint::draw(sf::RenderWindow & window, Camera & camera) {
