@@ -1,15 +1,10 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+#include "camera.hpp"
 #include "particle.hpp"
 #include "forces.hpp"
 #include "constraints.hpp"
-
-
-struct {
-    sf::Vector2f position = sf::Vector2f(0., 0.);
-    float zoom = 1.;
-} camera;
 
 
 class Scene {
@@ -20,7 +15,7 @@ class Scene {
 
     void update(float, uint);
 
-    void draw(sf::RenderWindow & window);
+    void draw(sf::RenderWindow &, Camera &);
 };
 
 void Scene::update(float delta_t, uint iterations) {
@@ -37,7 +32,7 @@ void Scene::update(float delta_t, uint iterations) {
     }
 }
 
-void Scene::draw(sf::RenderWindow & window) {
+void Scene::draw(sf::RenderWindow & window, Camera & camera) {
     for (Particle * p : particles) {
         sf::CircleShape p_shape(p->radius);
         p_shape.setFillColor(p->color);
@@ -52,7 +47,7 @@ void Scene::draw(sf::RenderWindow & window) {
 
 // pointers are so simple yet so complex...
 // wtf is this ? ------------v  a reference to the object ? (yes) but why this notation ?
-void update(sf::RenderWindow &, Scene &, float);
+void update(sf::RenderWindow &, Scene &, Camera &, float);
 
 
 void generate_scene(Scene &);
@@ -66,7 +61,8 @@ int main() {
     sf::Vector2i last_mouse_pos(0, 0);
     bool mouse_was_released(true);
 
-    // scene
+    // scene & camera
+    Camera camera;
     Scene scene{};
     generate_scene(scene);
 
@@ -112,17 +108,17 @@ int main() {
 
     // update window
     window.clear();
-    update(window, scene, delta_clock.restart().asSeconds());
+    update(window, scene, camera, delta_clock.restart().asSeconds());
     window.display();
     }
 };
 
 
-void update(sf::RenderWindow & window, Scene & scene, float delta_t) {
+void update(sf::RenderWindow & window, Scene & scene, Camera & camera, float delta_t) {
     // physics update
     scene.update(delta_t, 4);
     // render
-    scene.draw(window);
+    scene.draw(window, camera);
 };
 
 

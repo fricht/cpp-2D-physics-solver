@@ -12,6 +12,7 @@ class Constraint {
 
     // intended to be overidden by chindrens
     virtual void apply_constraint();
+    virtual void draw(sf::RenderWindow &, void *);
 };
 
 
@@ -21,6 +22,7 @@ class PositionConstraint : public Constraint {
         Particle * particle;
 
     void apply_constraint();
+    void draw(sf::RenderWindow &, void *);
 };
 
 
@@ -31,6 +33,7 @@ class PointDistanceConstraint : public Constraint {
         Particle * particle;
 
     void apply_constraint();
+    void draw(sf::RenderWindow &, void *);
 };
 
 
@@ -40,6 +43,7 @@ class FloorConstraint : public Constraint {
         std::vector<Particle *> * particles;
 
     void apply_constraint();
+    void draw(sf::RenderWindow &, void *);
 };
 
 

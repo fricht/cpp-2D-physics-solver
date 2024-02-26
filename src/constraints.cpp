@@ -3,11 +3,19 @@
 
 void Constraint::apply_constraint() {};
 
+void Constraint::draw(sf::RenderWindow &, void *) {};
+
 
 void PositionConstraint::apply_constraint() {
     particle->position = position;
     particle->velocity = sf::Vector2f();
     particle->acceleration = sf::Vector2f();
+};
+
+void PositionConstraint::draw(sf::RenderWindow & window, void * camera) {
+    sf::RectangleShape pixel;
+    pixel.setSize(sf::Vector2f(1, 1));
+    pixel.setFillColor(sf::Color::Red);
 };
 
 
@@ -24,6 +32,8 @@ void PointDistanceConstraint::apply_constraint() {
     // TODO : implement 'static collision' (named by me)
 };
 
+void PointDistanceConstraint::draw(sf::RenderWindow &, void *) {};
+
 
 void FloorConstraint::apply_constraint() {
     for (Particle * p : * particles) {
@@ -35,3 +45,5 @@ void FloorConstraint::apply_constraint() {
         }
     }
 };
+
+void FloorConstraint::draw(sf::RenderWindow &, void *) {};
