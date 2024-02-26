@@ -1,6 +1,9 @@
 #include "constraints.hpp"
 
 
+void Constraint::apply_constraint() {};
+
+
 void PositionConstraint::apply_constraint() {
     particle->position = position;
     particle->velocity = sf::Vector2f();
