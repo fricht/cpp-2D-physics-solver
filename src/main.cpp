@@ -128,6 +128,11 @@ void generate_scene(Scene & scene) {
     p->position = sf::Vector2f(100, 100);
     p->acceleration = sf::Vector2f(15, 8);
     scene.particles.push_back(p);
+    // fix it
+    PositionConstraint * fixed = new PositionConstraint;
+    fixed->position = sf::Vector2f(100, 100);
+    fixed->particle = p;
+    scene.constraints.push_back(fixed);
     // pendulum particle
     p = new Particle;
     p->color = sf::Color(255, 0, 0);
