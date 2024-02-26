@@ -1,7 +1,6 @@
 #ifndef CONST_HPP
 #define CONST_HPP
 
-#include <vector>// holy grail for unfixed-sized arrays
 #include <cmath>
 #include <SFML/Graphics.hpp>
 #include "particle.hpp"
@@ -32,5 +31,6 @@ class PointDistanceConstraint : public Constraint {
 
     void apply_constraint();
 };
+
 
 #endif
