@@ -2,6 +2,7 @@
 #define PART_HPP
 
 #include <SFML/Graphics.hpp>
+#include "camera.hpp"
 
 
 class Particle {
@@ -14,6 +15,8 @@ class Particle {
         sf::Color color;
 
     void simulate(float);
+
+    void draw(sf::RenderWindow &, Camera &);
 };
 
 

@@ -5,6 +5,7 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 #include "particle.hpp"
+#include "camera.hpp"
 
 
 class Constraint {
@@ -12,7 +13,7 @@ class Constraint {
 
     // intended to be overidden by chindrens
     virtual void apply_constraint();
-    virtual void draw(sf::RenderWindow &, void *);
+    virtual void draw(sf::RenderWindow &, Camera &);
 };
 
 
@@ -22,7 +23,7 @@ class PositionConstraint : public Constraint {
         Particle * particle;
 
     void apply_constraint();
-    void draw(sf::RenderWindow &, void *);
+    void draw(sf::RenderWindow &, Camera &);
 };
 
 
@@ -33,7 +34,7 @@ class PointDistanceConstraint : public Constraint {
         Particle * particle;
 
     void apply_constraint();
-    void draw(sf::RenderWindow &, void *);
+    void draw(sf::RenderWindow &, Camera &);
 };
 
 
@@ -43,7 +44,7 @@ class FloorConstraint : public Constraint {
         std::vector<Particle *> * particles;
 
     void apply_constraint();
-    void draw(sf::RenderWindow &, void *);
+    void draw(sf::RenderWindow &, Camera &);
 };
 
 

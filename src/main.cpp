@@ -34,13 +34,10 @@ void Scene::update(float delta_t, uint iterations) {
 
 void Scene::draw(sf::RenderWindow & window, Camera & camera) {
     for (Particle * p : particles) {
-        sf::CircleShape p_shape(p->radius);
-        p_shape.setFillColor(p->color);
-        p_shape.setPosition(p->position);
-        // apply cam
-        p_shape.setScale(camera.zoom, camera.zoom);
-        p_shape.setOrigin(camera.position);
-        window.draw(p_shape);
+        p->draw(window, camera);
+    }
+    for (Constraint * c : constraints) {
+        c->draw(window, camera);
     }
 }
 
