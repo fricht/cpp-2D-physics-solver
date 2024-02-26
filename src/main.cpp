@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "particle.hpp"
+#include "forces.hpp"
 #include "constraints.hpp"
 
 
@@ -13,8 +14,9 @@ struct {
 
 class Scene {
     public:
-        std::vector<Particle*> particles;
-        std::vector<Constraint*> constraints;
+        std::vector<Particle *> particles;
+        std::vector<Force *> forces;
+        std::vector<Constraint *> constraints;
 
     void update(float, uint);
 
@@ -22,6 +24,9 @@ class Scene {
 };
 
 void Scene::update(float delta_t, uint iterations) {
+    for (Force * f : forces) {
+        f->apply_force(delta_t);
+    }
     for (Particle * p : particles) {
         p->simulate(delta_t);
     }
@@ -122,10 +127,34 @@ void update(sf::RenderWindow & window, Scene & scene, float delta_t) {
 
 
 void generate_scene(Scene & scene) {
-    Particle * p = new Particle;
-    p->color = sf::Color(255, 255, 255, 255);
+    Particle * p;
+    // free fall particle
+    p = new Particle;
+    p->color = sf::Color(255, 255, 255);
     p->radius = 10;
     p->position = sf::Vector2f(100, 100);
     p->acceleration = sf::Vector2f(15, 8);
     scene.particles.push_back(p);
+    // pendulum particle
+    p = new Particle;
+    p->color = sf::Color(255, 0, 0);
+    p->radius = 8;
+    p->position = sf::Vector2f(200, 100);
+    scene.particles.push_back(p);
+    // pendulum
+    PointDistanceConstraint * pendulum = new PointDistanceConstraint;
+    pendulum->distance = 50;
+    pendulum->point = sf::Vector2f(250, 100);
+    pendulum->particle = p;
+    scene.constraints.push_back(pendulum);
+    // floor
+    FloorConstraint * floor = new FloorConstraint;
+    floor->particles = & scene.particles;
+    floor->y_pos = 300;
+    scene.constraints.push_back(floor);
+    // gravity
+    GravityForce * gravity = new GravityForce;
+    gravity->particles = & scene.particles;
+    gravity->gravity = sf::Vector2f(0, 9.9);
+    scene.forces.push_back(gravity);
 };
