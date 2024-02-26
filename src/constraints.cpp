@@ -15,6 +15,7 @@ void PositionConstraint::apply_constraint() {
 void PositionConstraint::draw(sf::RenderWindow & window, Camera & camera) {
     sf::RectangleShape pixel(sf::Vector2f(1, 1));
     pixel.setFillColor(sf::Color::Red);
+    pixel.setPosition(position);
     camera.apply_cam(pixel);
     window.draw(pixel);
 };
@@ -30,10 +31,20 @@ void PointDistanceConstraint::apply_constraint() {
     }
     direction *= distance - dist;
     particle->position += direction;
-    // TODO : implement 'static collision' (named by me)
+    // 'static collision' (named by me)
+    sf::Vector2f link = point - particle->position;
+    sf::Vector2f normal = sf::Vector2f(link.y, -link.x);
+    particle->static_collision(normal);
 };
 
-void PointDistanceConstraint::draw(sf::RenderWindow &, Camera &) {};
+void PointDistanceConstraint::draw(sf::RenderWindow & window, Camera & camera) {
+    sf::Vertex line[2];
+    line[0].position = (point - camera.position) * camera.zoom;
+    line[0].color = sf::Color::Green;
+    line[1].position = (particle->position - camera.position) * camera.zoom;
+    line[1].color = sf::Color::Red;
+    window.draw(line, 2, sf::Lines);
+};
 
 
 void FloorConstraint::apply_constraint() {
@@ -47,4 +58,12 @@ void FloorConstraint::apply_constraint() {
     }
 };
 
-void FloorConstraint::draw(sf::RenderWindow &, Camera &) {};
+void FloorConstraint::draw(sf::RenderWindow & window, Camera & camera) {
+    float height = (y_pos - camera.position.y) * camera.zoom;
+    sf::Vertex line[2];
+    line[0].position = sf::Vector2f(0, height);
+    line[0].color = sf::Color::Blue;
+    line[1].position = sf::Vector2f(800, height);
+    line[1].color = sf::Color::Blue;
+    window.draw(line, 2, sf::Lines);
+};
