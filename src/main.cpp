@@ -153,6 +153,6 @@ void generate_scene(Scene & scene) {
     // gravity
     GravityForce * gravity = new GravityForce;
     gravity->particles = & scene.particles;
-    gravity->gravity = sf::Vector2f(0, 90.9);
+    gravity->gravity = sf::Vector2f(0, 100);
     scene.forces.push_back(gravity);
 };
