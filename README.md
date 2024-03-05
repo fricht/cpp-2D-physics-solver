@@ -1,3 +1,3 @@
 # cpp-2D-physics-solver
 
-A project to write physics solversin c++.
+A project to write physics solvers in C++.
